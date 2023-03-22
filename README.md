@@ -179,10 +179,11 @@ import './main.css';
 
 ```
   "scripts": {
+    ...
     "test_e2e": "cypress open",
     "test_jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test": "cross-env NODE_OPTIONS='--experimental-vm-modules' npx jest",
-  },
+  }
 ```
 
 2.11.3 Добавить в файл tsconfig.json:
