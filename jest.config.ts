@@ -10,9 +10,13 @@ const config: JestConfigWithTsJest = {
       useESM: true
     }
   },
-  testEnvironment: "node",
-  transform: {},
-  testPathIgnorePatterns: ["./dist", "/cypress"]
+  testEnvironment: "jsdom",
+  transform: {
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.vue$": "@vue/vue3-jest"
+  },
+  testPathIgnorePatterns: ["./dist", "/cypress"],
+  setupFiles: ["<rootDir>/tests/test-setup.ts"]
 };
 
 export default config;

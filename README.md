@@ -174,6 +174,8 @@ import './main.css';
 * **npm i -D @babel/core**
 * **npm i -D @babel/preset-env**
 * **npm i -D eslint-plugin-cypress**
+* **npm i vue-template-compiler**
+* **npm i -D @vue/vue3-jest**
 
 2.11.2 Добавить в файл package.json:
 
@@ -228,9 +230,13 @@ const config: JestConfigWithTsJest = {
       useESM: true
     }
   },
-  testEnvironment: "node",
-  transform: {},
-  testPathIgnorePatterns: ["./dist", "/cypress"]
+  testEnvironment: "jsdom",
+  transform: {
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.vue$": "@vue/vue3-jest"
+  },
+  testPathIgnorePatterns: ["./dist", "/cypress"],
+  setupFiles: ["<rootDir>/tests/test-setup.ts"]
 };
 
 export default config;
