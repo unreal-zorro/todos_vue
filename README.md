@@ -92,6 +92,15 @@ module.exports = {
     "plugin:prettier/recommended",
     "prettier",
   ],
+  rules: {
+    ...
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto"
+      }
+    ]
+  },
 }
 ```
 
@@ -155,3 +164,122 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './main.css';
 ```
+
+### 2.11 Настройка тестов
+
+2.11.1 Установить зависимости:
+
+* **npm i -D cross-env**
+* **npm i ts-node**
+* **npm i -D @babel/core**
+* **npm i -D @babel/preset-env**
+* **npm i -D eslint-plugin-cypress**
+* **npm i vue-template-compiler**
+* **npm i -D @vue/vue3-jest**
+
+2.11.2 Добавить в файл package.json:
+
+```
+  "scripts": {
+    ...
+    "test_e2e": "cypress open",
+    "test_jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "cross-env NODE_OPTIONS='--experimental-vm-modules' npx jest",
+  }
+```
+
+2.11.3 Добавить в файл tsconfig.json:
+
+```
+{
+  "compilerOptions": {
+    "rootDirs": [
+      "src"
+    ],
+    "outDir": "dist",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "allowJs": true,
+    "types": [
+      "node",
+      "@types/jest",
+      "cypress"
+    ]
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}
+```
+
+2.11.4 Изменить расширение файла jest.config.js на .ts и изменить его содержимое на:
+
+```
+// @ts-ignore
+import type { JestConfigWithTsJest } from "ts-jest";
+
+const config: JestConfigWithTsJest = {
+  extensionsToTreatAsEsm: [".ts"],
+  verbose: true,
+  preset: "ts-jest/presets/default-esm",
+  globals: {
+    "ts-jest": {
+      useESM: true
+    }
+  },
+  testEnvironment: "jsdom",
+  transform: {
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.vue$": "@vue/vue3-jest"
+  },
+  testPathIgnorePatterns: ["./dist", "/cypress"],
+  setupFiles: ["<rootDir>/tests/test-setup.ts"]
+};
+
+export default config;
+```
+
+2.11.5 Добавить в файл babel.config.js:
+
+```
+module.exports = {
+  presets: ["@vue/cli-plugin-babel/preset", "@babel/preset-env"],
+```
+
+2.11.6 Добавить в файл .eslintrc.js:
+
+```
+module.exports = {
+  extends: [
+    "plugin:cypress/recommended",
+  ],
+  rules: {
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto"
+      }
+    ]
+  },
+  globals: {
+    cy: true
+  }
+};
+```
+
+2.11.7 Обновить библиотеки до последних версий:
+
+* **npm i -D cypress**
+
+2.11.8 Запустить e2e тесты и настроить файлы cypress:
+
+* **npm run test_e2e**
+
+2.11.9 Запуск тестов:
+
+* **npm run test**
+  или
+* **npm run test_jest**

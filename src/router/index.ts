@@ -1,26 +1,22 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import MainPage from "../pages/main/main.page.vue";
+import NoteListPage from "../pages/noteList/noteList.page.vue";
+import NotePage from "../pages/note/note.page.vue";
+import NewNotePage from "../pages/newNote/newNote.page.vue";
+import EditNotePage from "../pages/editNote/editNote.page.vue";
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "home",
-    component: HomeView
-  },
-  {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue")
-  }
+  { path: "/", name: "home", component: MainPage },
+  { path: "/notes", name: "notes", component: NoteListPage },
+  { path: "/notes/:id", name: "note", component: NotePage },
+  { path: "/new", name: "new", component: NewNotePage },
+  { path: "/edit/:id", name: "edit", component: EditNotePage }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  linkExactActiveClass: "active"
 });
 
 export default router;
