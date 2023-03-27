@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-// import BaseComponent from "../base/base.component";
+import { Options } from "vue-class-component";
+import BaseComponent from "../base/base.component";
 
 @Options({
   props: {
@@ -30,8 +30,7 @@ import { Options, Vue } from "vue-class-component";
     onChecked: { type: Function, required: false }
   }
 })
-export default class Todo extends Vue {
-  // extends BaseComponent
+export default class Todo extends BaseComponent {
   readonly checked!: boolean;
   readonly text!: string;
   readonly onChecked!: () => boolean;
