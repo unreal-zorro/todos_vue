@@ -283,3 +283,14 @@ module.exports = {
 * **npm run test**
   или
 * **npm run test_jest**
+
+## 3. Развёртывание приложения (deploy)
+
+### 3.1 Firebase
+
+Фронтенд-веб-приложение было развёрнуто (задеплоено) на платформе firebase.
+
+Адреса в сети интернет:
+
+* **https://todos-vue-777-96653.web.app**
+* **https://todos-vue-777-96653.firebaseapp.com**
